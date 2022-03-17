@@ -1,5 +1,4 @@
 
-import Head from "next/head";
 import React, { ReactNode } from "react";
 import { MainWrapper } from "./main.wrapper";
 
@@ -11,8 +10,7 @@ interface ContainerProps {
 export const MainContainer = ({ children, keywords }: ContainerProps) => {
     return (
         <>
-            <Head><title>Shop API</title></Head>
-
+            <title>Shop API</title>
             <MainWrapper>
                 {children}
             </MainWrapper>
