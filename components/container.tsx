@@ -1,4 +1,5 @@
-import Head from "next/Head";
+
+import { Head } from "next/document";
 import React, { ReactNode } from "react";
 import { MainWrapper } from "./main.wrapper";
 
