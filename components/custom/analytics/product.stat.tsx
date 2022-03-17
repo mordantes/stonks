@@ -18,7 +18,7 @@ export const CategoryStat: React.FC<{
 			<h5 className="d-flex justify-content-around">{text}</h5>
 			<h6 className="d-flex justify-content-around ">
 				<span>{summary.description}</span>
-				<span className="text-decoration-underline">{summary.value} товаров</span>
+				<span className="text-decoration-underline">{summary.value}</span>
 			</h6>
 		</div>
 	)

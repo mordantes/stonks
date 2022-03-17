@@ -21,7 +21,6 @@ interface Categories {
     totalProducts: number,
     _id: string
 }
-
 interface Props {
     data: {
         categories: Categories[]
