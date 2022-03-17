@@ -1,4 +1,4 @@
-
+import Head from "next/head";
 import type { AppProps } from 'next/app'
 import '../styles/bootstrap.min.css'
 import '../styles/bootstrap.css'
