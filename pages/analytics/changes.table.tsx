@@ -3,7 +3,7 @@ import { TableBody } from "../../components/common/table/table.body"
 import { TableWrapper } from "../../components/common/table/wrapper"
 import { AnalyticsTableItem } from "./a.tableHeader"
 import { AnalyticsTableHeader } from "./a.tableItem"
-
+import React from 'react'
 
 
 export const ChangesTable: React.FC<{
