@@ -1,9 +1,10 @@
-import { TableHeader } from "../../components/common/table/header"
-import { TableBody } from "../../components/common/table/table.body"
-import { TableWrapper } from "../../components/common/table/wrapper"
+
 import { AnalyticsTableItem } from "./a.tableHeader"
 import { AnalyticsTableHeader } from "./a.tableItem"
 import React from 'react'
+import { TableWrapper } from "../../common/table/wrapper"
+import { TableHeader } from "../../common/table/header"
+import { TableBody } from "../../common/table/table.body"
 
 
 export const ChangesTable: React.FC<{

@@ -1,5 +1,5 @@
-import { interfaceProductItem } from "../../../components/common/product/product.item";
-import { ProductData } from "../../../types";
+import { interfaceProductItem } from "../components/common/product/product.item";
+import { ProductData } from "../types";
 import React from 'react'
 
 

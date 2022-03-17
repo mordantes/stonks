@@ -1,10 +1,8 @@
-import type { NextPage } from 'next'
+import { GetServerSidePropsContext } from "next";
 import React from "react";
-import TelegramIcon from '@mui/icons-material/Telegram';
-import { Button } from '@mui/material';
 
 
-const Home: NextPage = () => {
+export default function Home(props: any) {
   return (
     <>
       <div className='about'>
@@ -32,5 +30,10 @@ const Home: NextPage = () => {
 
   )
 }
+export async function getServerSideProps(context: GetServerSidePropsContext) {
 
-export default Home
+
+  return {
+    props: {}
+  }
+}

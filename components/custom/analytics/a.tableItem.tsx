@@ -1,4 +1,4 @@
-import styles from '../../components/common/table/table.item.module.css'
+import styles from '../../../components/common/table/table.item.module.css'
 import React from 'react'
 
 export const AnalyticsTableHeader: React.FC = () => {

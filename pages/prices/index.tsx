@@ -1,9 +1,8 @@
 import { GetServerSidePropsContext, NextPage } from "next"; import { useRouter } from "next/router";
-import { useContext } from "react";
 import { URL } from "url";
 import { Products } from "../../components/common/product";
 import { interfaceProductItem } from "../../components/common/product/product.item";
-import { priceListDto } from "./dto";
+import { priceListDto } from "../../dto";
 
 
 interface pageProps {

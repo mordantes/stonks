@@ -1,9 +1,9 @@
 import React from "react";
 import { GetServerSidePropsContext } from "next";
 import { Stack } from "@mui/material";
-import { CategoryStat } from "./product.stat";
-import { ChangesTable } from "./changes.table";
 import { Row } from "../../components/common/wrappers/row";
+import { ChangesTable } from "../../components/custom/analytics/changes.table";
+import { CategoryStat } from "../../components/custom/analytics/product.stat";
 
 
 interface Products {
