@@ -1,0 +1,40 @@
+.defaultHeader, .defaultValue, .productNameHeader , .productNameValue, .rankValue, .analyticsHeader {
+	width: 7rem;
+	height: 4rem;
+	vertical-align: middle;
+	font-size: 1rem;
+	user-select: none;
+	text-align: center;
+}
+.analyticsHeader{
+	width: 15rem;
+}
+.defaultHeader, .productNameHeader{
+	cursor: s-resize;
+}
+.rankValue{
+	text-align: center;
+}
+
+.productNameHeader  {
+	min-width:  40rem;
+	max-width:  40rem;
+	text-align: left;
+}
+
+.productNameValue {
+	text-align: left;
+}
+
+.rankValue {
+	width: 10rem;
+}
+
+.paginationField {
+	min-width: 3rem;
+	max-width: 3rem;
+}
+.paginationFieldLightSpeed {
+	min-width: 6rem;
+	max-width: 6rem;
+}
