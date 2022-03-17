@@ -32,6 +32,9 @@ interface Props {
 
 export default function Analytics({ data }: Props) {
 
+    if (data == undefined) {
+        return <p> Loading </p>
+    }
     const { categories, productsByValue, productsByCount } = data
 
     const mostAmount = categories.sort((a, b) => a.totalProducts > b.totalProducts ? -1 : 1)[0]

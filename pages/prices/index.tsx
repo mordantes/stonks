@@ -17,13 +17,13 @@ interface pageProps {
 const Prices: NextPage<pageProps> = (pageProps) => {
 
     if (!pageProps.success || !pageProps.data) {
-        return <p> Loadfing.... </p>
+        return <p> Loading.... </p>
     }
     if (pageProps.message) {
         return <p> {pageProps.message} </p>
     }
     const router = useRouter()
-    console.log(pageProps.length)
+
 
     const changePage = (val: number) => {
         router.push({ pathname: '/prices', query: { page: val, term: pageProps.term } })
