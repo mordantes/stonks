@@ -6,7 +6,6 @@ interface ContainerProps {
     keywords?: string | string[]
     children?: ReactNode | ReactNode[]
 }
-
 export const MainContainer = ({ children, keywords }: ContainerProps) => {
     return (
         <>
