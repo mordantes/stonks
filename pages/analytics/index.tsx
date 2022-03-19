@@ -26,13 +26,14 @@ interface Props {
         categories: Categories[]
         productsByValue: Products[],
         productsByCount: Products[],
+        message?: string
     }
 }
 
 export default function Analytics({ data }: Props) {
 
-    if (data == undefined) {
-        return <p> Loading </p>
+    if ('message' in data) {
+        return <p> {data.message} </p>
     }
     const { categories, productsByValue, productsByCount } = data
 
