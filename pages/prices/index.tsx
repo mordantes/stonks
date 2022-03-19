@@ -62,15 +62,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             }
         }
     }
-    let baseUri: string | null = null
-    if (req) {
-        // Server side rendering
-        baseUri = req.headers?.host as string
-    } else {
-        // Client side rendering
-        baseUri = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
-    }
-    const data = await getProductsData(baseUri, page, term)
+
+    const data = await getProductsData('http://' + context.req.headers.host + '/api/products', page, term)
     return {
         props: {
             page: parseInt(page),

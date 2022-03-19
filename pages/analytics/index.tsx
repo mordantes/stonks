@@ -1,10 +1,11 @@
 import React from "react";
-import { GetServerSidePropsContext } from "next";
+import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
 import { Stack } from "@mui/material";
 import { Row } from "../../components/common/wrappers/row";
 import { ChangesTable } from "../../components/custom/analytics/changes.table";
 import { CategoryStat } from "../../components/custom/analytics/product.stat";
 import absoluteUrl from 'next-absolute-url'
+import getAnalyticsApi from '../api/analytics'
 
 interface Products {
     [key: string]: number | string
@@ -79,7 +80,7 @@ export default function Analytics({ data }: Props) {
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={{ xs: 1, sm: 2, md: 4 }}
             >
-                {categoryBlockData.map(e => <CategoryStat {...e} />)}
+                {categoryBlockData.map((e, index) => <CategoryStat {...e} key={index} />)}
             </Stack>
             <Row>
                 <h2 className={"d-flex justify-content-around"}>Статистика по товарам</h2>
@@ -93,16 +94,7 @@ export default function Analytics({ data }: Props) {
 
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const { req } = context;
-    let baseUri: string | null = null
-    if (req) {
-        // Server side rendering
-        baseUri = req.headers?.host as string
-    } else {
-        // Client side rendering
-        baseUri = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
-    }
-    const data = await getAnalytics(baseUri)
+    const data = await getAnalytics('http://' + context.req.headers.host + '/api/analytics')
     return {
         props: {
             data
@@ -111,9 +103,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 async function getAnalytics(uri: string) {
-    const url = new URL(uri)
+    // const url = new URL(uri)
 
-    return fetch(url.toString())
+    return fetch(uri)
         .then(data => data.json())
         .then(data => data.data)
         .catch(e => ({ message: e.toString(), data: null, success: true }))

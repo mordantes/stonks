@@ -9,9 +9,9 @@ export const AnalyticsTableItem: React.FC<{
 	}[]
 }> = ({ items }) => {
 	return (
-		<>{items.map(e => {
+		<>{items.map((e, index) => {
 			return (
-				<tr>
+				<tr key={index}>
 					<td scope="col" className={styles.defaultHeader}>{e.goodName}</td>
 					<td scope="col" className={styles.defaultHeader}>{e.sub}</td>
 					<td scope="col" className={styles.defaultHeader}>{e.prices}</td>
