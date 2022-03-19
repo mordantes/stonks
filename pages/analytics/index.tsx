@@ -4,7 +4,7 @@ import { Stack } from "@mui/material";
 import { Row } from "../../components/common/wrappers/row";
 import { ChangesTable } from "../../components/custom/analytics/changes.table";
 import { CategoryStat } from "../../components/custom/analytics/product.stat";
-
+import absoluteUrl from 'next-absolute-url'
 
 interface Products {
     [key: string]: number | string
@@ -93,8 +93,16 @@ export default function Analytics({ data }: Props) {
 
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-
-    const data = await getAnalytics()
+    const { req } = context;
+    let baseUri: string | null = null
+    if (req) {
+        // Server side rendering
+        baseUri = req.headers?.host as string
+    } else {
+        // Client side rendering
+        baseUri = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+    }
+    const data = await getAnalytics(baseUri)
     return {
         props: {
             data
@@ -102,8 +110,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
 }
 
-async function getAnalytics() {
-    const url = new URL(process.env.ANALYTICS_PATH as string)
+async function getAnalytics(uri: string) {
+    const url = new URL(uri)
 
     return fetch(url.toString())
         .then(data => data.json())

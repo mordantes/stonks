@@ -52,6 +52,7 @@ const Prices: NextPage<pageProps> = (pageProps) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { page, term } = context.query as { page: string | undefined, term: string | undefined }
+    const { req } = context
 
     if (page == undefined) {
         return {
@@ -61,7 +62,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             }
         }
     }
-    const data = await getProductsData(page, term)
+    let baseUri: string | null = null
+    if (req) {
+        // Server side rendering
+        baseUri = req.headers?.host as string
+    } else {
+        // Client side rendering
+        baseUri = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+    }
+    const data = await getProductsData(baseUri, page, term)
     return {
         props: {
             page: parseInt(page),
@@ -71,8 +80,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
 }
 
-async function getProductsData(current: string, term = '') {
-    const url = new URL(process.env.PRODUCT_PATH as string)
+async function getProductsData(uri: string, current: string, term = '') {
+    const url = new URL(uri)
     url.searchParams.append('page', current.toString())
     if (term && term != undefined) {
         url.searchParams.append('term', term.toString())
