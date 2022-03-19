@@ -1,6 +1,5 @@
-import React, { ReactChild, ReactChildren, ReactElement, ReactNode } from "react"
+import React, { ReactNode } from "react"
 import { NavbarForm } from "./form"
-import { NavbarMenuItem } from "./navbar.menu.item"
 
 
 
@@ -11,7 +10,7 @@ export const NavbarList: React.FC<{ children: ReactNode, collapsed: boolean }> =
 			<ul className="navbar-nav">
 				{children}
 			</ul>
-			{/* <NavbarForm /> */}
+			<NavbarForm />
 		</div>
 	)
 }

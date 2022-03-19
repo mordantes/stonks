@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { NavbarBrand } from "./brand";
-import { NavbarForm } from "./form";
 import { NavbarList } from "./navbar.list";
 import { NavbarMenuItem } from "./navbar.menu.item";
 import { NavbarWrapper } from "./navbar.wrapper";
@@ -22,7 +21,6 @@ export const ResponsiveNavbar: React.FC = () => {
 				<NavbarMenuItem refName="Товары" refPath="/prices" />
 				<NavbarMenuItem refName="Наш анализ" refPath="/analytics" />
 			</NavbarList>
-			<NavbarForm />
 		</NavbarWrapper>
 	)
 }
