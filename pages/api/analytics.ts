@@ -10,16 +10,16 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
     case 'GET':
       try {
           const categories = await ProductModel
-			.aggregate(aggregateCat)
-			.sort({"totalChanges" : -1})
-		 const productsByCount = await ProductModel
-		 	.aggregate(aggregateProduct)
-			 .sort({ "prices" : -1 })
-			 .limit(10)
-      const productsByValue = await ProductModel
-		 	.aggregate(aggregateProduct)
-			 .sort({ "sub" : -1 })
-			 .limit(10)
+              .aggregate(aggregateCat)
+              .sort({"totalChanges" : -1})
+          const productsByCount = await ProductModel
+                    .aggregate(aggregateProduct)
+                    .sort({ "prices" : -1 })
+                    .limit(10)
+          const productsByValue = await ProductModel
+                    .aggregate(aggregateProduct)
+                    .sort({ "sub" : -1 })
+                    .limit(10)
           return res.json({ success: true, data: {categories, productsByCount, productsByValue}})
       } catch (error) {
         return res.json({ success: true , message: 'Bad request, '+ error})
@@ -151,8 +151,8 @@ const aggregateProduct = [
   prices: "$prices",
   sub: {
 		$subtract:[
-               {$first: "$maxPrice.price"},
-               {$first: "$minPrice.price"},
+        {$first: "$maxPrice.price"},
+        {$first: "$minPrice.price"},
 		]  
   }
 }
@@ -164,7 +164,6 @@ const aggregateProduct = [
 			},
 			goodName: "$goodName",
 			sub:"$sub"
-			
 		}
 	}
 ]

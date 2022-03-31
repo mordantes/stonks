@@ -84,8 +84,8 @@ export default function Analytics({ data }: Props) {
             </Stack>
             <Row>
                 <h2 className={"d-flex justify-content-around"}>Статистика по товарам</h2>
-                <ChangesTable products={productsByValue} sortBy={'prices'} title={'Изменение в руб.'} />
-                <ChangesTable products={productsByCount} sortBy={'sub'} title={'Количество изменений'} />
+                <ChangesTable products={productsByValue} sortBy={'sub'} title={'Изменение в руб.'} />
+                <ChangesTable products={productsByCount} sortBy={'prices'} title={'Количество изменений'} />
             </Row>
         </>
     )

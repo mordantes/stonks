@@ -95,7 +95,7 @@ const aggregateSub = (term?: string ) => [
         } 
       
   } : {
-        $match: ProductModel.where({"goodName": new RegExp(term) }).cast(ProductModel) 
+         $match: ProductModel.where({"goodName": {'$regex': new RegExp(term), $options:'i'}  }).cast(ProductModel) 
   },
 
 ]
