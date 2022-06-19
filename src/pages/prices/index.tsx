@@ -42,7 +42,7 @@ const Prices: NextPage<Props> = ({ field, page, sort, term }) => {
 
 
     const changePage = (val: number) => {
-        router.push({ pathname: '/prices', query: { page: val } })
+        router.push({ pathname: '/prices', query: { page: val, sort: sort, field: field } })
     }
 
     const changeTerm = (val: string) => {
