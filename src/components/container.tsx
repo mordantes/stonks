@@ -1,4 +1,5 @@
 
+import Head from "next/head";
 import React, { ReactNode } from "react";
 import { SWRConfig } from "swr";
 import { ResponsiveNavbar } from "./common/navbar";
@@ -14,7 +15,12 @@ export const MainContainer = ({ children, keywords }: ContainerProps) => {
             revalidateOnFocus: false,
             revalidateIfStale: false
         }}>
-            <title>Shop API</title>
+            <Head>
+                <title>PP2P</title>
+                <link rel="icon" type="image/png" href="/3.png" />
+            </Head>
+
+
             <ResponsiveNavbar />
             <MainWrapper>
                 {children}
