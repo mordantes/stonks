@@ -1,7 +1,7 @@
 import React from "react";
 import { NavbarMenuItem } from "./navbar.menu.item";
 import { NavbarWrapper } from "./navbar.wrapper";
-import HomeIcon from '@mui/icons-material/Home'
+
 
 
 export const ResponsiveNavbar: React.FC = () => {
