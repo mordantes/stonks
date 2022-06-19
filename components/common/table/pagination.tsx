@@ -10,7 +10,7 @@ export const Pagination: React.FC<{
 }>
 	= ({ length = 0, current, perPage, pageClick }) => {
 
-		console.log(length)
+
 
 		const defaultClazz = 'page-item'
 		const endValue = ((length - (length % perPage)) / perPage)
@@ -21,7 +21,7 @@ export const Pagination: React.FC<{
 
 		const nextValue = current + 1 === endValue ? endValue : current + 1
 		const prevValue = current - 1 < 0 ? startValue : current - 1
-
+		console.log(length, nextValue, length, perPage)
 		return (
 			<div>
 				<ul className="pagination">
@@ -34,7 +34,7 @@ export const Pagination: React.FC<{
 					<li className="page-item disabled">
 						<ResponsiveButton
 							color="info"
-							onClick={() => pageClick && pageClick(current)}
+							onClick={() => pageClick(current)}
 							text={current}
 							className={styles.paginationField}
 						/>
@@ -42,7 +42,7 @@ export const Pagination: React.FC<{
 					<li className={rightArrowClazz}>
 						<ResponsiveButton className={styles.paginationField}
 							color="info"
-							onClick={() => length === perPage && pageClick(nextValue)}
+							onClick={() => (length === perPage) && pageClick(nextValue)}
 							text={<span>&raquo;</span>}
 						/>
 					</li>

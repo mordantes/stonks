@@ -4,35 +4,36 @@ import dbConnect from '../../lib/mongo';
 
 export default async function handler (req:NextApiRequest, res:NextApiResponse) {
   const { method , query} = req
-  const {page, term} = query as {page : string, term : string | undefined}
+  const {page, term, field, sort} = query as {page : string, term : string | undefined, field: string, sort : "ASC" | "DESC"}
 
   await dbConnect()
+
+  const sortField = field === 'price' ?  sort === 'DESC' ?  'minPrice' : 'maxPrice' : field
+
 
   switch (method) {
     case 'GET':
       try {
+          const total = await ProductModel.countDocuments()
           const products = await ProductModel
           .aggregate(aggregateSub(term))
-          .sort({"sub" : -1})
+          .sort({[sortField as string] : (sort === 'ASC' ? 1 : -1)})
           .skip(
             page === '0' ? 0 : parseInt(page.toString()) * 50
-          ).limit(
-            page === '0' ? 50 : parseInt(page.toString()) * 50
-          )
-
-          return res.status(200).json({ success: true, data: products, length : products.length })
-      } catch (error) {
-        return res.status(400).json({ success: false , message: 'Bad request.'})
+          ).limit(50)
+          return res.status(200).json({ success: true, data: products, length : products.length, error: undefined, total  })
+      } catch (error: any) {
+        return res.status(500).json({ success: false , error: error.toString(), data: undefined, length: undefined})
       }
       break
     default:
-      res.status(400).json({ success: false })
+      res.status(500).json({ success: false })
       break
   }
 };
 
 
-const aggregateSub = (term?: string ) => [
+const aggregateSub = (term?: string,) => [
 
   {
     $project:  {
@@ -71,6 +72,8 @@ const aggregateSub = (term?: string ) => [
   link:"$link",
   category:"$category",
   prices: "$prices",
+  minPrice: {$first: "$minPrice.price"},
+  maxPrice: {$first: "$maxPrice.price"},
   sub: {
     $multiply:[
       {

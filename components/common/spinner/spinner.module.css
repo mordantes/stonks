@@ -1,0 +1,8 @@
+.spinnerStack {
+	display: flex;
+	justify-content: space-around;
+}
+
+.spinner {
+	margin: 10px;
+}

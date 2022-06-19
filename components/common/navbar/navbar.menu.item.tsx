@@ -1,13 +1,23 @@
-import Link from "next/link"
 
+import { SvgIconTypeMap } from '@mui/material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
+import Link from 'next/link';
+import styles from './navbar.module.css'
 
+interface Props {
+	Icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">>
+	refName: string
+	refPath: string
+}
 
-export const NavbarMenuItem: React.FC<{ refName: string, refPath: string }> = ({ refName, refPath }) => {
+export const NavbarMenuItem: React.FC<Props> = ({ refName, refPath, Icon, }) => {
+
 	return (
-		<li className="nav-item">
-			<Link href={refPath}>
-				<a className="nav-link" >{refName}</a>
-			</Link>
-		</li>
+		<Link href={refPath}>
+			<a className={styles.ref}>
+				{Icon && <Icon sx={{ mr: 0.5 }} fontSize="inherit" />}
+				{refName}
+			</a>
+		</Link>
 	)
 }

@@ -1,88 +1,150 @@
-import { GetServerSidePropsContext, NextPage } from "next"; import { useRouter } from "next/router";
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
+import { useRouter } from "next/router";
 import { URL } from "url";
 import { Products } from "../../components/common/product";
 import { interfaceProductItem } from "../../components/common/product/product.item";
 import { priceListDto } from "../../dto";
+import useSWR from 'swr'
+import { fetcher } from "../../utils/fetcher";
+import { Spinner } from "../../components/common/spinner";
+import { ErrorCard } from "../../components/common/error";
+import { ProductsList } from "../../components/custom/products";
+import { ApiProductsResponse, Option } from "../../types";
+import { SearchField } from "../../components/custom/products/search";
+import { ControlField } from "../../components/custom/products/control.field";
+import { PaginationField } from "../../components/custom/products/pagination";
+import { Select } from "../../components/common/select";
+import React from "react";
+import { Pagination } from "../../components/common/table/pagination";
 
-
-interface pageProps {
-    data: interfaceProductItem[]
-    page: number
-    term: string
-    success: boolean
-    message?: string
-    length?: number
+const options: Option[] = [
+    { field: 'price', value: 'DESC', label: 'По убыванию цены' },
+    { field: 'price', value: 'ASC', label: 'По возрастанию цены' },
+    { field: 'sub', value: 'DESC', label: 'По изменению (убывание)' },
+    { field: 'sub', value: 'ASC', label: 'По изменению (возрастание)' },
+    { field: 'offer', value: 'DESC', label: 'По убыванию скидки' },
+    { field: 'offer', value: 'ASC', label: 'По возрастанию скидки' }
+]
+interface Props {
+    page: string,
+    field: string,
+    sort: "ASC" | "DESC"
+    term: string | undefined
 }
 
-const Prices: NextPage<pageProps> = (pageProps) => {
-
-    if (!pageProps.success || !pageProps.data) {
-        return <p> Loading.... </p>
-    }
-    if (pageProps.message) {
-        return <p> {pageProps.message} </p>
-    }
+const Prices: NextPage<Props> = ({ field, page, sort, term }) => {
     const router = useRouter()
+    // const { page, term, field, sort } = router.query
+    const { data, error, isValidating } = useSWR<ApiProductsResponse>(
+        !term ? '/api/products' + '?page=' + page + '&field=' + field + '&sort=' + sort
+            : '/api/products?page=' + page + '&field=' + field + '&sort=' + sort + '&term=' + term
+        , fetcher)
 
 
     const changePage = (val: number) => {
-        router.push({ pathname: '/prices', query: { page: val, term: pageProps.term } })
+        router.push({ pathname: '/prices', query: { page: val } })
     }
 
     const changeTerm = (val: string) => {
-        router.push({ pathname: '/prices', query: { page: pageProps.page, term: val } })
+        router.push({ pathname: '/prices', query: { page: 0, term: val } })
     }
 
     const resetTerm = () => {
-        router.push({ pathname: '/prices', query: { page: pageProps.page } })
+        router.push({ pathname: '/prices', query: { page: page } })
+    }
+
+    const changeSort = (val: string) => {
+        const target = options.filter(e => e.label === val)[0]
+        router.push({
+            pathname: '/prices',
+            query: {
+                page: 0,
+                term: term,
+                field: target.field,
+                sort: target.value
+            }
+        })
     }
 
 
+
+    if (isValidating) return <Spinner />
+    if (error) return <ErrorCard header={'code' in error ? error.code : '500'} text={'message' in error ? error.message : error} />
+    if (!data?.success) return <ErrorCard header={'500'} text={data?.error as string} />
+    const content = data?.length == 0 ?
+        <h3 className="text-center">Ничего не найдено :(</h3>
+        : <ProductsList data={data?.data} />
+
+    console.log(term)
     return (
-        <Products
-            term={pageProps.term}
-            page={pageProps.page}
-            pageClick={changePage}
-            products={pageProps.data}
-            resetTerm={resetTerm}
-            changeTerm={changeTerm}
-        />
+        <>
+            <ControlField>
+                <Select
+                    options={options}
+                    name={'Сортировка'}
+                    current={{
+                        field: field as string,
+                        label: options.filter(e => e.field === field && e.value === sort)[0].label,
+                        value: sort as any
+                    }}
+                    onChange={changeSort}
+                />
+                <SearchField
+                    placeholder="Молоко"
+                    label={'Поиск по названию'}
+                    value={term as string}
+                    onSubmit={changeTerm}
+                />
+                <Pagination
+                    current={parseInt(page)}
+                    pageClick={changePage}
+                    perPage={50}
+                    length={data.length}
+                />
+                {/* <PaginationField total={data.total} onClick={changePage} current={page} /> */}
+
+            </ControlField>
+
+            {content}
+        </>
     )
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const { page, term } = context.query as { page: string | undefined, term: string | undefined }
-    const { req } = context
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
 
-    if (page == undefined) {
+    const { page, field, sort, term } = context.query
+    console.log(term)
+    const badPage = (page == undefined || isNaN(parseInt(page as string)))
+    const badField = (field == undefined || ['price', 'offer', 'sub'].indexOf(field as string) == -1)
+    const badSort = (sort == undefined || ['DESC', 'ASC'].indexOf(sort as string) == -1)
+    const badTerm = (term == undefined || term == '')
+
+    if (badPage || badField || badSort) {
         return {
             redirect: {
-                destination: '/prices?page=0',
-                permanent: true
-            }
+                destination:
+                    !badTerm ? '/prices'
+                        + '?page=' + (badPage ? '0' : page)
+                        + '&field=' + (badField ? 'sub' : field)
+                        + '&sort=' + (badSort ? 'DESC' : sort)
+                        + '&term=' + term
+                        : '/prices'
+                        + '?page=' + (badPage ? '0' : page)
+                        + '&field=' + (badField ? 'sub' : field)
+                        + '&sort=' + (badSort ? 'DESC' : sort)
+                ,
+                permanent: false,
+            },
         }
     }
 
-    const data = await getProductsData('http://' + context.req.headers.host + '/api/products', page, term)
+
     return {
         props: {
-            page: parseInt(page),
-            term: term || '',
-            ...data
-        },
+            page, field, sort, term: term || null
+        }
     }
 }
 
-async function getProductsData(uri: string, current: string, term = '') {
-    const url = new URL(uri)
-    url.searchParams.append('page', current.toString())
-    if (term && term != undefined) {
-        url.searchParams.append('term', term.toString())
-    }
 
-    return fetch(url.toString())
-        .then(data => data.json())
-        .then(data => ({ ...data, data: priceListDto(data.data) }))
-        .catch(e => ({ message: e.toString(), data: null, success: true }))
-}
 export default Prices

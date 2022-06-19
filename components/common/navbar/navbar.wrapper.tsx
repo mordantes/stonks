@@ -1,15 +1,17 @@
+import { Breadcrumbs, Paper } from "@mui/material";
 import { ReactChild, ReactChildren, ReactNode } from "react";
-
-
+import styles from './navbar.module.css'
 
 export const NavbarWrapper: React.FC<{ children: ReactNode | ReactNode[] }> = ({ children }) => {
 
 
 	return (
-		<nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
-			<div className="container-fluid">
-				{children}
-			</div>
-		</nav >
+		<div className={styles.sticky}>
+			<Paper elevation={1} >
+				<nav className={styles.navbar}>
+					{children}
+				</nav >
+			</Paper>
+		</div >
 	)
 }

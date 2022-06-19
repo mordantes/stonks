@@ -9,7 +9,6 @@ import { ResponsiveNavbar } from '../components/common/navbar'
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MainContainer>
-      <ResponsiveNavbar />
       <Component {...pageProps} />
     </MainContainer>
   )

@@ -1,0 +1,10 @@
+.customSelectWrapper {
+	box-sizing: border-box;
+}
+
+.customSelect {
+	margin: 8px;
+	width: 30ch
+}
+
+.option {}

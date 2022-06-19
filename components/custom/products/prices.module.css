@@ -1,0 +1,63 @@
+.listDetailes {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-content: flex-start;
+	flex-grow: .5;
+
+}
+
+.priceBlock {
+	min-width: 190px;
+	max-width: 190px;
+	width: 190px;
+	text-align: left;
+}
+
+.chart {
+	height: 300px;
+	min-height: 300px;
+	max-height: 300px;
+}
+
+.controlField {
+	margin: 5px;
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	justify-content: space-around;
+}
+
+.accordion {
+	overflow-y: auto;
+	max-height: 80vh;
+}
+
+@media (max-width: 1180px) {
+	.listDetailes {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		flex-grow: .5;
+	}
+
+	.priceBlock {
+		min-width: 160px;
+		max-width: 160px;
+		width: 160px;
+		text-align: left;
+	}
+
+	.controlField {
+		margin: 5px;
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: center;
+		justify-content: space-around;
+	}
+
+	.accordion {
+		overflow-y: auto;
+		max-height: 75vh;
+	}
+}

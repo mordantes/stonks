@@ -1,0 +1,41 @@
+.navbar {
+	margin: 0 auto;
+	padding: 5px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	min-width: 280px;
+	max-width: 280px;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: center;
+}
+
+.sticky {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 999;
+	background: #fff;
+}
+
+.ref,
+.selected {
+	padding: 10px;
+	color: black !important;
+	text-decoration: none !important;
+}
+
+.ref:hover,
+.selected:hover {
+	color: palevioletred !important;
+	text-decoration: underline !important;
+}
+
+.ref {
+	font-weight: 400;
+}
+
+.selected {
+	font-weight: 600;
+}
