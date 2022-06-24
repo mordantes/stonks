@@ -18,6 +18,8 @@ import React from "react";
 import { Pagination } from "../../components/common/table/pagination";
 
 const options: Option[] = [
+    { field: 'lastDate', value: 'DESC', label: 'По дате (сначала новые)' },
+    { field: 'lastDate', value: 'ASC', label: 'По дате (сначала старые)' },
     { field: 'price', value: 'DESC', label: 'По убыванию цены' },
     { field: 'price', value: 'ASC', label: 'По возрастанию цены' },
     { field: 'sub', value: 'DESC', label: 'По изменению (убывание)' },
@@ -42,7 +44,7 @@ const Prices: NextPage<Props> = ({ field, page, sort, term }) => {
 
 
     const changePage = (val: number) => {
-        router.push({ pathname: '/prices', query: { page: val, sort: sort, field: field } })
+        router.push({ pathname: '/prices', query: { page: val, sort: sort, field: field, term: term } })
     }
 
     const changeTerm = (val: string) => {

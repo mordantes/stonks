@@ -74,6 +74,7 @@ const aggregateSub = (term?: string,) => [
   prices: "$prices",
   minPrice: {$first: "$minPrice.price"},
   maxPrice: {$first: "$maxPrice.price"},
+  lastDate:  {$first: "$maxPrice.date"},
   sub: {
     $multiply:[
       {

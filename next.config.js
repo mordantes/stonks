@@ -11,6 +11,11 @@ module.exports = {
         destination: '/prices',
         permanent: true,
       },
+      {
+        source: '/home',
+        destination: '/prices',
+        permanent: true,
+      },
     ]
   },
 }

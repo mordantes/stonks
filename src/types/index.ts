@@ -8,6 +8,7 @@ export interface ProductData {
 	category:  string
 	prices: PriceProps[],
 	sub: number
+	lastDate: Date
 }
 
 export interface PriceProps{
