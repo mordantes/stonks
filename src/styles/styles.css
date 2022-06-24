@@ -1,3 +1,17 @@
+:root {
+	--main-list-details-grow: .3;
+	--main-price-block-width: 190px;
+	--main-price-block-small-width: 160px;
+	--main-price-block-sm-width: 100px;
+	--main-price-block-sm-small-width: 70px;
+	--main-chart-height: 300px;
+	--main-chart-small-height: 150px;
+	--main-accordion-height: 78vh;
+	--main-accordion-small-height: 68vh;
+	--main-control-field-direction: row;
+	--main-control-field-sm-direction: column-reverse
+}
+
 .container {
 	padding-top: 5rem
 }

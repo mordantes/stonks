@@ -35,18 +35,18 @@ export const ProductsList: React.FC<Props> = ({ data }) => {
 							aria-controls={elem.goodName}
 							id={elem.goodName}
 						>
-							<Typography sx={{ width: '45%', flexShrink: 0, wordWrap: 'break-word' }}>
+							<Typography sx={{ width: '45%', flexShrink: 0, flexGrow: .7, wordWrap: 'break-word' }}>
 								{elem.goodName}
 							</Typography>
 							<div className={styles.listDetailes}>
 								<span className={styles.priceBlock}>
 									<span className='text-secondary'>Текущая цена - </span>
 									<span className='text-primary'>
-										{elem.prices.sort((a, b) => a.date > b.date ? -1 : 1)[0].price} y.e
+										{elem.prices.sort((a, b) => a.date > b.date ? -1 : 1)[0].price}
 									</span>
+
 								</span>
-								<span className={styles.priceBlock}>
-									<span className='text-secondary'>Изменение - </span>
+								<span className={styles.priceBlockSmall}>
 									<span className={isGrowth ? 'text-danger' : 'text-success'}>
 										{isGrowth ? <ArrowDropUp /> : <ArrowDropDown />}
 										{Math.floor(elem.sub)}%
@@ -56,12 +56,11 @@ export const ProductsList: React.FC<Props> = ({ data }) => {
 									<span className={styles.priceBlock}>
 										<span className='text-secondary'>Скидка -  </span>
 										<span className='text-success'>
-											{elem.offer} у.е
+											{elem.offer}
 										</span>
 									</span>
-									: <span className={styles.priceBlock}>
-										<span className='text-secondary'>Нет скидки :( </span>
-									</span>
+									:
+									<span className={styles.priceBlock}></span>
 								}
 							</div>
 						</AccordionSummary>
