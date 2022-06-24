@@ -115,9 +115,8 @@ const Prices: NextPage<Props> = ({ field, page, sort, term }) => {
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
 
     const { page, field, sort, term } = context.query
-    console.log(term)
     const badPage = (page == undefined || isNaN(parseInt(page as string)))
-    const badField = (field == undefined || ['price', 'offer', 'sub'].indexOf(field as string) == -1)
+    const badField = (field == undefined || ['price', 'offer', 'sub', 'lastDate'].indexOf(field as string) == -1)
     const badSort = (sort == undefined || ['DESC', 'ASC'].indexOf(sort as string) == -1)
     const badTerm = (term == undefined || term == '')
 
