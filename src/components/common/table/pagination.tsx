@@ -1,3 +1,4 @@
+import { Button } from "@mui/material"
 import { ResponsiveButton } from "../button"
 import styles from './table.item.module.css'
 
@@ -11,7 +12,6 @@ export const Pagination: React.FC<{
 	= ({ length = 0, current, perPage, pageClick }) => {
 
 
-
 		const defaultClazz = 'page-item'
 		const endValue = ((length - (length % perPage)) / perPage)
 		const startValue = 0
@@ -21,11 +21,51 @@ export const Pagination: React.FC<{
 
 		const nextValue = current + 1 === endValue ? endValue : current + 1
 		const prevValue = current - 1 < 0 ? startValue : current - 1
-		console.log(length, nextValue, length, perPage)
+
 		return (
 			<div>
 				<ul className="pagination">
-					<li className={leftArrowClazz}>
+					{/* start page */}
+					<Button
+						variant="outlined"
+						color="secondary"
+						disabled={startValue === current}
+						onClick={() => pageClick && pageClick(startValue)}
+					>В начало</Button>
+
+					{/* prev page */}
+					<Button
+						variant="outlined"
+						color="secondary"
+						disabled={startValue === current}
+						onClick={() => pageClick && pageClick(prevValue)}
+					>{startValue === current ? '...' : prevValue}</Button>
+
+					{/* current page */}
+					<Button
+						variant="outlined"
+						color="primary"
+					>{current}</Button>
+
+					{/* nextPage page */}
+					<Button
+						variant="outlined"
+						color="secondary"
+						disabled={(current == endValue)}
+						onClick={() => pageClick && pageClick(nextValue)}
+					>{(current == endValue) ? '...' : nextValue}</Button>
+
+					{/* last page */}
+					<Button
+						variant="outlined"
+						color="secondary"
+						disabled={(current == endValue)}
+						onClick={() => pageClick && pageClick(endValue)}
+					>В конец</Button>
+
+
+
+					{/* <li className={leftArrowClazz}>
 						<ResponsiveButton className={styles.paginationFieldLightSpeed} color="info" onClick={() => pageClick && pageClick(startValue)} text={'В начало'} />
 					</li>
 					<li className="page-item">
@@ -45,7 +85,7 @@ export const Pagination: React.FC<{
 							onClick={() => (length === perPage) && pageClick(nextValue)}
 							text={<span>&raquo;</span>}
 						/>
-					</li>
+					</li> */}
 					{/* <li className={rightArrowClazz}>
 						<ResponsiveButton className={styles.paginationFieldLightSpeed} color="info" onClick={() => pageClick(endValue)} text={'В конец'} />
 					</li> */}

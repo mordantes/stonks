@@ -48,7 +48,7 @@ const Prices: NextPage<Props> = ({ field, page, sort, term }) => {
     }
 
     const changeTerm = (val: string) => {
-        router.push({ pathname: '/prices', query: { page: 0, term: val } })
+        router.push({ pathname: '/prices', query: { page: 0, term: val, sort, field } })
     }
 
     const resetTerm = () => {
@@ -76,8 +76,6 @@ const Prices: NextPage<Props> = ({ field, page, sort, term }) => {
     const content = data?.length == 0 ?
         <h3 className="text-center">Ничего не найдено :(</h3>
         : <ProductsList data={data?.data} />
-
-    console.log(term)
     return (
         <>
             <ControlField>
@@ -101,7 +99,7 @@ const Prices: NextPage<Props> = ({ field, page, sort, term }) => {
                     current={parseInt(page)}
                     pageClick={changePage}
                     perPage={50}
-                    length={data.length}
+                    length={data.total}
                 />
                 {/* <PaginationField total={data.total} onClick={changePage} current={page} /> */}
 

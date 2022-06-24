@@ -48,16 +48,16 @@
 }
 
 .chart {
-	height: var(----main-chart-height);
-	min-height: var(----main-chart-height);
-	max-height: var(----main-chart-height);
+	height: var(--main-chart-height);
+	min-height: var(--main-chart-height);
+	max-height: var(--main-chart-height);
 }
 
 @media (max-width: 1180px) {
 	.chart {
-		height: var(----main-chart-small-height);
-		min-height: var(----main-chart-small-height);
-		max-height: var(----main-chart-small-height);
+		height: var(--main-chart-small-height);
+		min-height: var(--main-chart-small-height);
+		max-height: var(--main-chart-small-height);
 	}
 }
 

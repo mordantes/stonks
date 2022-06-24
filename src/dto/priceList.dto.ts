@@ -25,7 +25,6 @@ export const priceListDto = (data: ProductData[]) => {
 		}
 	})
 	}catch(e){
-		console.log(e)
 		throw e
 	}
 }

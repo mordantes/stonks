@@ -14,14 +14,15 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
   switch (method) {
     case 'GET':
       try {
-          const total = await ProductModel.countDocuments()
+          const total = await ProductModel.aggregate(aggregateSub(term))
+ 
           const products = await ProductModel
           .aggregate(aggregateSub(term))
           .sort({[sortField as string] : (sort === 'ASC' ? 1 : -1)})
           .skip(
             page === '0' ? 0 : parseInt(page.toString()) * 50
           ).limit(50)
-          return res.status(200).json({ success: true, data: products, length : products.length, error: undefined, total  })
+          return res.status(200).json({ success: true, data: products, length : products.length, error: undefined, total : total.length  })
       } catch (error: any) {
         return res.status(500).json({ success: false , error: error.toString(), data: undefined, length: undefined})
       }
